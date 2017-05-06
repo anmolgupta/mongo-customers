@@ -2,6 +2,7 @@
  /* global require,module */
  /* node:true,quotmark:false */
 var mongoose = require('mongoose');
+mongoose.Promise = require('q').Promise;
 var Schema = mongoose.Schema;
 var config = require('../config.js');
 

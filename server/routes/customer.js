@@ -40,14 +40,9 @@
 
  appRouter.post('/', (req, res) => {
 
- 	Customer.create(req.body).then((customer) => {
-
- 		return res.send(customer.toJSON());
-
- 	}, (err) => {
+ 	Customer.create(req.body).then((customer) => res.send(customer.toJSON()), (err) => {
  		winston.error(err);
  		return res.status(500).send(err);
-
  	});
 
  });

@@ -20,27 +20,29 @@ function getRandomNumber(len) {
 
 function getCustomers() {
 
-	return new Promise((resolve, reject) => {
-		Customers.find({}).select({
-			_id: 1
-		}).exec().then((results) => {
-			resolve(results);
-		}, (err) => {
-			reject(err);
-		});
+	var defer = q.defer();
+
+	Customers.find({}).select({
+		_id: 1
+	}).exec().then((results) => {
+		defer.resolve(results);
+	}, (err) => {
+		defer.reject(err);
 	});
+
+	return defer.promise;
 }
 
-function getRandomAlphabets(length){
+function getRandomAlphabets(length) {
 
-    var candidates = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+	var candidates = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
 
-    var result = '';
-    for (var i = length; i > 0; --i) {
-        result += candidates[Math.floor(Math.random() * candidates.length)];
-    }
+	var result = '';
+	for (var i = length; i > 0; --i) {
+		result += candidates[Math.floor(Math.random() * candidates.length)];
+	}
 
-    return result;
+	return result;
 
 }
 
@@ -49,7 +51,7 @@ function getItems() {
 	for (let i = 1; i <= 10; i++) {
 
 		var item = {
-			name: getRandomAlphabets(getRandomNumber(10)+1),
+			name: getRandomAlphabets(getRandomNumber(10) + 1),
 			quantity: getRandomNumber(10) + 1,
 			rate: getRandomNumber(1000) + 1
 		};
@@ -60,7 +62,7 @@ function getItems() {
 	return items;
 }
 
-getCustomers.then(function(customers) {
+getCustomers().then((customers) => {
 	if (!customers.length) {
 		return;
 	}
@@ -75,22 +77,20 @@ getCustomers.then(function(customers) {
 			billNumber: i,
 			billDate: new Date(getRandomInt(previousTimestamp, currentTimestamp)),
 			discount: getRandomNumber(70) + 1,
-			items: items,
+			items,
 			tax: getRandomNumber(30) + 1,
 			customerId: customers[getRandomNumber(customers.length)]._id
 		};
-
+		
 		ps.push(Bills.create(bill));
 	}
+
 	return q.allSettled(ps);
 
-}).then(function(results) {
+}).then(null, (err) => {
 
-	for (let result in results) {
-		if (result.state !== "fulfilled") {
-			winston.error(result.reason);
-		}
-	}
-}).finally(function() {
+	winston.error(err);
+
+}).finally(() => {
 	process.exit();
 });
