@@ -1,3 +1,103 @@
 <div class="container-fluid">
-   
+    <div class="row margin-top-20">
+        <div class="col-sm-2">
+            <input class="form-control" type="text" placeholder="filter name"></div>
+
+        <div class="col-sm-2">
+            <input class="form-control" type="text" placeholder="filter mobile"></div>
+
+        <div class="col-sm-2">
+            <input class="form-control" type="text" placeholder="filter phone"></div>
+
+        <div class="col-sm-2">
+            <input class="form-control" type="text" placeholder="filter address"></div>
+
+        <div class="col-sm-2">
+            <input class="form-control" type="text" placeholder="filter dob"></div>
+
+        <div class="col-sm-2">
+            <span>
+                <button class="btn btn-default"> <i class="fa fa-filter"></i>
+                </button>
+                <button class="btn btn-default margin-left-20" ng-click="addNewCustomer = true;"> <i class="fa fa-plus"></i>
+                </button>
+            </span>
+        </div>
+
+    </div>
+
+    <table class="table table-bordered margin-top-20" >
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Dob</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-if="addNewCustomer">
+                <td>
+                    <input class="form-control" type="text" ng-model = "newCustomer.name"></td>
+                <td>
+                    <input class="form-control" type="text" ng-model = "newCustomer.mobile"></td>
+                <td>
+                    <input class="form-control" type="text" ng-model = "newCustomer.phone"></td>
+                <td>
+                    <input class="form-control" type="text" ng-model = "newCustomer.name"></td>
+                <td>
+                    <input class="form-control" type="text" ng-model = "newCustomer.dob"></td>
+                <td>
+                    <input class="form-control" type="text" ng-model = "newCustomer.email"></td>
+                <td>
+                    <span>
+                        <button class="btn btn-sm btn-success" ng-click="addCustomer(newCustomer,$index)">Add</button>
+                    </span>
+                    <span>
+                        <button class="btn btn-sm btn-danger" ng-click="$parent.addNewCustomer = false;">Cancel</button>
+                    </span>
+                </td>
+            </tr>
+            <tr ng-repeat="customer in customers">
+                <td ng-if="!editCustomers[$index]">{{customer.name}}</td>
+                <td ng-if="editCustomers[$index]">
+                    <input class="form-control" type="text" ng-model = "customer.name"></td>
+                <td  ng-if="!editCustomers[$index]">{{customer.mobile}}</td>
+                <td  ng-if="editCustomers[$index]">
+                    <input class="form-control" type="text" ng-model = "customer.mobile"></td>
+                <td  ng-if="!editCustomers[$index]">{{customer.phone}}</td>
+                <td  ng-if="editCustomers[$index]">
+                    <input class="form-control" type="text" ng-model = "customer.phone"></td>
+                <td  ng-if="!editCustomers[$index]">{{customer.address.join(',')}}</td>
+                <td  ng-if="editCustomers[$index]">
+                    <input class="form-control" type="text" ng-model = "customer.name"></td>
+                <td  ng-if="!editCustomers[$index]">{{customer.dob | date:'dd MMM yyyy'}}</td>
+                <td  ng-if="editCustomers[$index]">
+                    <input class="form-control" type="text" ng-model = "customer.dob"></td>
+                <td  ng-if="!editCustomers[$index]">{{cusotmer.email}}</td>
+                <td  ng-if="editCustomers[$index]">
+                    <input class="form-control" type="text" ng-model = "customer.email"></td>
+                <td  ng-if="!editCustomers[$index]">
+                    <a ng-click="editCustomers[$index] = true;">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <a ng-click="deleteCustomer(cusotmer._id)">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </td>
+                <td  ng-if="editCustomers[$index]">
+                    <span>
+                        <button class="btn btn-sm btn-success" ng-click="updateCustomer(customer,$index)">Save</button>
+                    </span>
+                    <span>
+                        <button class="btn btn-sm btn-danger" ng-click="editCustomers[$index] = false;">Cancel</button>
+                    </span>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
 </div>
