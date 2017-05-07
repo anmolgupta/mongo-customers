@@ -15,6 +15,7 @@ angular.module('trantorApp')
 
             method(baseUrl+"/customers", customer).success(()=>{
                 $scope.addEditCustomer = false;
+                $scope.getCustomers();
             }).error((err)=>{
                 $scope.showError(err,"Error in saving cusotmer");
             });
@@ -39,7 +40,7 @@ angular.module('trantorApp')
 
         $scope.filter = {};
         $scope.page = 0;
-        var limit = 1;
+        var limit = 20;
 
         $scope.nextPage = function(){
             $scope.page++;
@@ -84,26 +85,9 @@ angular.module('trantorApp')
             }
 
             $http.delete(baseUrl+"/customers?id="+id).success(()=>{
-
+                $scope.getCustomers();
             }).error((err)=>{
                 $scope.showError(err, "Error in deleting customers");
-            });
-        };
-
-
-        $scope.updateCustomer = function(customer, $index){
-            $http.put(baseUrl+"/customers", customer).success(()=>{
-                $scope.editCustomers[$index] = false;
-            }).error((err)=>{
-                $scope.showError(err, "Error in updating customer");
-            });
-        };
-
-        $scope.addCustomer = function(customer){
-            $http.post(baseUrl+"/customers", customer).success(()=>{
-                $scope.addNewCustomer = false;
-            }).error((err)=>{
-                $scope.showError(err, "Error in adding Customer");
             });
         };
 
