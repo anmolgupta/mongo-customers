@@ -12,7 +12,7 @@ var customerSchema = new Schema({
   name:  String,
   mobile: String,
   phone:   String,
-  address: [{ flat: String,street:String, state:String, pinCode: String }],
+  address: [{ flat: String,street:String, state:String, pincode: String }],
   dob: { type: Date},
   email: String
 }, {minimize:false});

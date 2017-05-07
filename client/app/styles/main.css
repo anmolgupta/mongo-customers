@@ -357,6 +357,9 @@ input:checked + .slider:before {
 .margin-left-20 {
     margin-left: 20px;
 }
+.margin-bottom-20 {
+    margin-bottom: 20px;
+}
 
 /* Rounded sliders */
 .slider.round {

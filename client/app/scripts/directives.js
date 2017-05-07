@@ -1,7 +1,7 @@
 'use strict';
 /*jshint node:true, quotmark:false*/
-/*global app,$*/
-
+/*global $, angular*/
+let app = angular.module('trantorApp');
 app.directive('ngEnter', function () {
 	return function (scope, element, attrs) {
 		element.bind("keydown keypress", function (event) {

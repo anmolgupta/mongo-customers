@@ -5,7 +5,32 @@
 angular.module('trantorApp')
     .controller('MainCtrl', function ($scope, $http, baseUrl) {
         
-        $scope.addNewCustomer = false;
+        $scope.addEditCustomer = false;
+
+        $scope.saveCustomer = function(customer){
+            var method = $http.post;
+            if(customer._id){
+                method = $http.put;
+            }
+
+            method(baseUrl+"/customers", customer).success(()=>{
+                $scope.addEditCustomer = false;
+            }).error((err)=>{
+                $scope.showError(err,"Error in saving cusotmer");
+            });
+        };
+
+
+        $scope.openAddEditCustomer = function(customer){
+
+            $scope.addEditCustomer  = true;
+            if(!customer){
+                $scope.newCustomer = {address:[{}]};
+            }else{
+                $scope.newCustomer = customer;   
+            }
+        };
+
         $scope.getCustomers = function(){
             $scope.editCustomers = [];
 
