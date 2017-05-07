@@ -11,21 +11,22 @@
  	var skip = 0;
  	var limit = 20;
  	var query = {};
+ 	var body = req.body;
 
- 	if(req.query.name){
- 		query.name = new RegExp('.*' + req.query.name + '.*', 'i');
+ 	if(body.name){
+ 		query.name = new RegExp('.*' + body.name + '.*', 'i');
  	}
- 	if(req.query.mobile){
- 		query.mobile = new RegExp('.*' + req.query.mobile + '.*', 'i');
+ 	if(body.mobile){
+ 		query.mobile = new RegExp('.*' + body.mobile + '.*', 'i');
  	}
- 	if(req.query.phone){
- 		query.mobile = new RegExp('.*' + req.query.phone + '.*', 'i');
+ 	if(body.phone){
+ 		query.mobile = new RegExp('.*' + body.phone + '.*', 'i');
  	}
- 	if(req.query.limit){
- 		limit = req.query.limit;
+ 	if(body.limit){
+ 		limit = body.limit;
  	}
- 	if(req.query.skip){
- 		skip = req.query.skip;
+ 	if(body.offset){
+ 		skip = body.offset;
  	}
 
  	//TODO:: Address and DOB

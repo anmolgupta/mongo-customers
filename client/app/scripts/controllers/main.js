@@ -31,12 +31,47 @@ angular.module('trantorApp')
             }
         };
 
+        $scope.filterCustomers = function(){
+            $scope.page = 0;
+            $scope.getCustomers();
+
+        };
+
+        $scope.filter = {};
+        $scope.page = 0;
+        var limit = 1;
+
+        $scope.nextPage = function(){
+            $scope.page++;
+            $scope.getCustomers();
+        };
+
+        $scope.previousPage = function(){
+            $scope.page--;
+            $scope.getCustomers();
+        };
+
         $scope.getCustomers = function(){
+
             $scope.editCustomers = [];
 
-            $http.post(baseUrl+"/customers/query").success((data)=>{
-                console.log(data);
-                $scope.customers = data;
+            $scope.filter.limit  = limit;
+            $scope.filter.offset = $scope.page*limit;
+
+            $http.post(baseUrl+"/customers/query", $scope.filter).success((data)=>{
+                
+                if(data.length){
+                    $scope.customers = data;
+                }else{
+                    $scope.page--;
+                }
+
+                if(data.length < limit){
+                    $scope.noMorePage = true;
+                }else{
+                    $scope.noMorePage = false;
+                }
+
             }).error((err)=>{
                 $scope.showError(err, "Error in getting customers");
             });

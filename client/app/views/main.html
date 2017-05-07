@@ -59,6 +59,10 @@
 
         </tbody>
     </table>
+
+    <div class="row text-center">
+        <span><button class="btn btn-primary btn-sm" ng-click="previousPage()" ng-disabled="!page"><i class="fa fa-arrow-left"></i></button> {{page + 1}} <button class="btn btn-primary btn-sm" ng-click="nextPage()" ng-disabled="noMorePage"><i class="fa fa-arrow-right"></i></button></span>
+    </div>
 </div>
 
 <modal title="Add Doctor" visible="addEditCustomer">
