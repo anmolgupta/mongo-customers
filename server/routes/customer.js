@@ -12,6 +12,7 @@
  	var limit = 20;
  	var query = {};
  	var body = req.body;
+ 	
 
  	if(body.name){
  		query.name = new RegExp('.*' + body.name + '.*', 'i');
@@ -25,11 +26,18 @@
  	if(body.limit){
  		limit = body.limit;
  	}
+ 	if(body.dob){
+ 		query.dob = new Date(body.dob);
+ 	}
+ 	if(body.address){
+ 		query.address = {$elemMatch:{state:new RegExp('.*' + body.address + '.*', 'i')}};
+ 	}
+
  	if(body.offset){
  		skip = body.offset;
  	}
 
- 	//TODO:: Address and DOB
+ 	
 
  	Customer.find(query).sort({_id:-1}).limit(limit).skip(skip).exec().then((results)=>{
  		return res.send(results);
@@ -40,6 +48,8 @@
  });
 
  appRouter.post('/', (req, res) => {
+ 	
+ 	console.log(JSON.stringify(req.body));
 
  	Customer.create(req.body).then((customer) => res.send(customer.toJSON()), (err) => {
  		winston.error(err);

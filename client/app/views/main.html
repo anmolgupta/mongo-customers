@@ -10,7 +10,7 @@
             <input ng-model="filter.phone" class="form-control" type="text" placeholder="filter phone"></div>
 
         <div class="col-sm-2">
-            <input ng-model="filter.address" class="form-control" type="text" placeholder="filter address"></div>
+            <input ng-model="filter.address" class="form-control" type="text" placeholder="filter state"></div>
 
         <div class="col-sm-2">
             <input ng-model="filter.dob" class="form-control" type="date" placeholder="filter dob"></div>
@@ -44,9 +44,11 @@
                 <td>{{customer.name}}</td>
                 <td >{{customer.mobile}}</td>
                 <td >{{customer.phone}}</td>
-                <td >{{customer.address.join(',')}}</td>
+                <td ><div ng-repeat="item in customer.address">
+                {{item.flat}} {{item.street}} {{item.state}} {{item.pincode}}<br>
+                </div></td>
                 <td >{{customer.dob | date:'dd MMM yyyy'}}</td>
-                <td >{{cusotmer.email}}</td>
+                <td >{{customer.email}}</td>
                 <td >
                     <a ng-click="openAddEditCustomer(customer)">
                         <i class="fa fa-edit"></i>
@@ -69,15 +71,15 @@
 <ng-form class="form-horizontal" name="customerForm">
 <div class="row margin-top-20">
     <label class="col-sm-2">Name: </label>
-    <div class="col-sm-10"><input class="form-control" type="text" ng-model="newCustomer.name" placeholder="Enter Name"></div>
+    <div class="col-sm-10" ng-class="{'has-error':customerForm.name.$invalid,'has-success':customerForm.name.$valid}"><input class="form-control" type="text" ng-model="newCustomer.name" placeholder="Enter Name" name="name" required></div>
 </div>
 <div class="row margin-top-20">
     <label class="col-sm-2">Phone: </label>
-    <div class="col-sm-10"><input  class="form-control" type="text" ng-model="newCustomer.phone" phone-validation placeholder="Enter Phone"></div>
+    <div class="col-sm-10" ng-class="{'has-error':customerForm.phone.$invalid,'has-success':customerForm.phone.$valid}"><input  class="form-control" type="text" ng-model="newCustomer.phone" phone-validation name="phone" placeholder="Enter Phone" required></div>
 </div>
 <div class="row margin-top-20">
     <label class="col-sm-2">Mobile: </label>
-    <div class="col-sm-10"><input class="form-control" type="text" ng-model="newCustomer.mobile"  phone-validation placeholder="Enter Mobile"></div>
+    <div class="col-sm-10" ng-class="{'has-error':customerForm.mobile.$invalid,'has-success':customerForm.mobile.$valid}"><input class="form-control" type="text" ng-model="newCustomer.mobile"  phone-validation name="mobile" placeholder="Enter Mobile" required></div>
 </div>
 <div class="row margin-top-20">
     <label class="col-sm-2 column">Address: <button class="btn btn-sm btn-default" ng-click="newCustomer.address.push({})"><i class="fa fa-plus"></i></button></label>
@@ -90,12 +92,12 @@
     
 </div>
 <div class="row ">
-    <label class="col-sm-2">Dob: </label>
-    <div class="col-sm-10"><input class="form-control" type="date" ng-model="newCustomer.dob" placeholder="Enter DOB"></div>
+    <label class="col-sm-2" >Dob: </label>
+    <div class="col-sm-10" ng-class="{'has-error':customerForm.dob.$invalid,'has-success':customerForm.dob.$valid}"><input class="form-control" type="date" ng-model="newCustomer.dob" placeholder="Enter DOB" name="dob" required></div>
 </div>
 <div class="row margin-top-20">
-    <label class="col-sm-2">Email: </label>
-    <div class="col-sm-10"><input  class="form-control" type="text" ng-model="newCustomer.email" email-validation placeholder="Enter Email"></div>
+    <label class="col-sm-2" >Email: </label>
+    <div class="col-sm-10" ng-class="{'has-error':customerForm.email.$invalid,'has-success':customerForm.email.$valid}"><input  class="form-control" type="text" ng-model="newCustomer.email" email-validation name="email" placeholder="Enter Email" required></div>
 </div>
 </ng-form>
 <div class="row text-center margin-top-20">
