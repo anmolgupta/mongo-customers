@@ -51,11 +51,11 @@
 
  appRouter.put('/', (req, res) => {
  	var customer = req.body;
-
+ 	console.log(JSON.stringify(customer));
  	Customer.update({
- 			_id: customer.id
+ 			_id: customer._id
  		}, customer).exec()
- 		.then(() => {
+ 		.then((data) => {
  			// returns previous object which is a result of find query
  			return res.send();
  		}, (err) => {
