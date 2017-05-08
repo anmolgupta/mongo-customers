@@ -4,7 +4,7 @@
 
 angular.module('trantorApp')
     .controller('MainCtrl', function ($scope, $http, baseUrl) {
-        
+        $scope.baseUrl = baseUrl;
         $scope.addEditCustomer = false;
 
         $scope.saveCustomer = function(customer){
