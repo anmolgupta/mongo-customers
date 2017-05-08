@@ -73,11 +73,11 @@
 </div>
 <div class="row margin-top-20">
     <label class="col-sm-2">Phone: </label>
-    <div class="col-sm-10"><input  class="form-control" type="text" ng-model="newCustomer.phone" placeholder="Enter Phone"></div>
+    <div class="col-sm-10"><input  class="form-control" type="text" ng-model="newCustomer.phone" phone-validation placeholder="Enter Phone"></div>
 </div>
 <div class="row margin-top-20">
     <label class="col-sm-2">Mobile: </label>
-    <div class="col-sm-10"><input class="form-control" type="text" ng-model="newCustomer.mobile" placeholder="Enter Mobile"></div>
+    <div class="col-sm-10"><input class="form-control" type="text" ng-model="newCustomer.mobile"  phone-validation placeholder="Enter Mobile"></div>
 </div>
 <div class="row margin-top-20">
     <label class="col-sm-2 column">Address: <button class="btn btn-sm btn-default" ng-click="newCustomer.address.push({})"><i class="fa fa-plus"></i></button></label>
@@ -95,11 +95,11 @@
 </div>
 <div class="row margin-top-20">
     <label class="col-sm-2">Email: </label>
-    <div class="col-sm-10"><input  class="form-control" type="text" ng-model="newCustomer.email" placeholder="Enter Email"></div>
+    <div class="col-sm-10"><input  class="form-control" type="text" ng-model="newCustomer.email" email-validation placeholder="Enter Email"></div>
 </div>
-
+</ng-form>
 <div class="row text-center margin-top-20">
     <button class="btn btn-sm btn-default" ng-click="saveCustomer(newCustomer)" ng-disabled="customerForm.$invalid"><span ng-if="!newCustomer._id">Save</span><span ng-if="newCustomer._id">Update</span></button>
 </div>
-    </ng-form>
+    
 </modal>
