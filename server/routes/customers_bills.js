@@ -5,6 +5,7 @@
  var winston = require('winston');
  var q = require('q');
  var _ = require('underscore');
+ var mongoose = require('mongoose');
  var appRouter = express.Router();
  var Customer = require('../models/customer.js');
  var Bill = require('../models/bill.js');
@@ -109,33 +110,33 @@
 
  	var query = [unwind, project, group, project1, project2, project3, group2, project4];
 
- 	var customerPromise = Customer.find({}).exec();
  	var billPromise = Bill.aggregate(query).exec();
- 	q.all([customerPromise, billPromise]).then((results) => {
 
- 		var customers = results[0];
- 		var bills = results[1];
+ 	billPromise.then((results) => {
 
- 		var text = `"Customer Name","Mobile","Phone","Email","NoOfBills","Amount","Avg Amount"\n`;
+ 		Customer.populate(results, {
+ 			path: '_id'
+ 		}, (err, docs) => {
+ 			if (err) {
+ 				winston.error(err);
+ 				return res.status(500).send(err);
+ 			}
 
- 		_.each(customers, (customer) =>{
+ 			var text = `"Customer Name","Mobile","Phone","Email","NoOfBills","Amount","Avg Amount"\n`;
 
- 			var bill = _.findWhere(bills, {_id:""+customer._id}) || {};
+ 			_.each(docs, (bill) => {
 
- 			text+=`"${customer.name}","${customer.mobile}","${customer.phone}","${customer.email}","${bill.count}","${bill.total}","${bill.avgAmount}"\n`;
+ 				text += `"${bill._id.name}","${bill._id.mobile}","${bill._id.phone}","${bill._id.email}","${bill.count}","${bill.total}","${bill.avgAmount}"\n`;
+
+ 			});
+
+ 			res.set({
+ 				"Content-type": "text/csv",
+ 				"Content-Disposition": "attachment; filename=report.csv"
+ 			});
+ 			res.send(text);
 
  		});
-
-
- 		res.set({
- 			"Content-type": "text/csv",
- 			"Content-Disposition": "attachment; filename=report.csv"
- 		});
- 		res.send(text);
-
- 	}, (err) => {
- 		winston.error(err);
- 		return res.status(500).send(err);
  	});
  });
 

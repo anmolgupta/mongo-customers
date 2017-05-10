@@ -14,7 +14,10 @@ var billsSchema = new Schema({
   items:  [{name:String, quantity:Number, rate:Number}],
   discount: Number,
   tax: Number,
-  customerId: String
+  customerId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'customer'
+    }
 }, {minimize:false});
 
 var Bills = connection.model('bills', billsSchema);
